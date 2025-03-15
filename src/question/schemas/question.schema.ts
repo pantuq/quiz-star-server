@@ -3,7 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
-@Schema()
+@Schema({
+    timestamps: true, // 创建时间戳和修改时间戳
+})
 export class Question {
     @Prop({ required: true })
     title: string;
