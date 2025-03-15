@@ -2,6 +2,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     Patch,
@@ -41,11 +42,11 @@ export class QuestionController {
 
     @Patch(':id')
     updateOne(@Param('id') id: string, @Body() questionDto: QuestionDto) {
-        console.log('questionDto', questionDto);
-        return {
-            id,
-            title: 'aaa',
-            content: 'bbb',
-        };
+        return this.questionService.update(id, questionDto);
+    }
+
+    @Delete(':id')
+    deleteOne(@Param('id') id: string) {
+        return this.questionService.delete(id);
     }
 }
