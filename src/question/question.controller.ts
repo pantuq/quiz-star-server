@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
     Body,
@@ -23,15 +24,23 @@ export class QuestionController {
     }
 
     @Get() // GET /question 就是get请求
-    findAll(
+    async findAll(
         @Query('keyword') keyword: string,
         @Query('page') page: number,
         @Query('pageSize') pageSize: number,
     ) {
-        console.log(keyword, page, pageSize);
+        const list = await this.questionService.findAllList({
+            keyword,
+            page,
+            pageSize,
+        });
+
+        const count = await this.questionService.countAll({
+            keyword,
+        });
         return {
-            list: ['a', 'b', 'c'],
-            count: 10,
+            list,
+            count,
         };
     }
 

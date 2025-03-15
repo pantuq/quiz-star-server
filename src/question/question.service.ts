@@ -33,4 +33,26 @@ export class QuestionService {
     async findOne(id: string) {
         return await this.questionModel.findById(id);
     }
+
+    async findAllList({ keyword = '', page = 1, pageSize = 10 }) {
+        const whereOpt: any = {};
+        if (keyword) {
+            const reg = new RegExp(keyword, 'i');
+            whereOpt.title = { $regex: reg };
+        }
+        return await this.questionModel
+            .find(whereOpt)
+            .sort({ _id: -1 }) // 根据id倒序排列
+            .skip((page - 1) * pageSize) // 跳过多少条数据
+            .limit(pageSize);
+    }
+
+    async countAll({ keyword = '' }) {
+        const whereOpt: any = {};
+        if (keyword) {
+            const reg = new RegExp(keyword, 'i');
+            whereOpt.title = { $regex: reg };
+        }
+        return await this.questionModel.countDocuments(whereOpt);
+    }
 }
