@@ -13,8 +13,33 @@ export class Question {
     @Prop()
     desc: string;
 
+    @Prop()
+    js: string;
+
+    @Prop()
+    css: string;
+
+    @Prop({ default: false })
+    isPublished: boolean;
+
+    @Prop({ default: false })
+    isStar: boolean;
+
+    @Prop()
+    isDeleted: boolean;
+
     @Prop({ required: true })
     author: string;
+
+    @Prop()
+    componentList: {
+        fe_id: string; // 组件id,需要前端控制
+        type: string;
+        title: string;
+        isHidden: boolean;
+        isLocked: boolean;
+        props: object;
+    }[];
 
     // 待补充
 }
