@@ -5,11 +5,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
     // 依赖注入
-    constructor(private readonly useService: UserService) {}
+    constructor(
+        private readonly useService: UserService,
+        private readonly jwtService: JwtService,
+    ) {}
 
     async signIn(username: string, password: string) {
         const user = await this.useService.findOne(username, password);
@@ -20,6 +24,8 @@ export class AuthService {
 
         const { password: pwd, ...userInfo } = user.toObject();
 
-        return userInfo;
+        return {
+            token: this.jwtService.sign(userInfo),
+        };
     }
 }
