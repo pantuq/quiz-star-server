@@ -13,6 +13,9 @@ export class Question {
     @Prop()
     desc: string;
 
+    @Prop({ required: true })
+    author: string;
+
     // 待补充
 }
 

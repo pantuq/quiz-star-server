@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
@@ -9,6 +10,7 @@ import {
     Patch,
     Post,
     Query,
+    Request,
 } from '@nestjs/common';
 import { QuestionDto } from './dto/question.dto';
 import { QuestionService } from './question.service';
@@ -19,8 +21,9 @@ export class QuestionController {
     constructor(private readonly questionService: QuestionService) {}
 
     @Post()
-    create() {
-        return this.questionService.create();
+    create(@Request() req) {
+        const { username } = req.user;
+        return this.questionService.create(username);
     }
 
     @Get() // GET /question 就是get请求
