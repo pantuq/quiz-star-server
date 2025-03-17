@@ -25,7 +25,7 @@ export class Question {
     @Prop({ default: false })
     isStar: boolean;
 
-    @Prop()
+    @Prop({ default: false })
     isDeleted: boolean;
 
     @Prop({ required: true })
