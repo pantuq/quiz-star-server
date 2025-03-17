@@ -64,13 +64,9 @@ export class QuestionController {
     }
 
     @Patch(':id')
-    updateOne(
-        @Param('id') id: string,
-        @Body() questionDto: QuestionDto,
-        @Request() req,
-    ) {
-        const { username } = req;
-        return this.questionService.update(id, questionDto, username);
+    updateOne(@Param('id') id: string, @Body() questionDto: QuestionDto) {
+        // console.log(questionDto);
+        return this.questionService.update(id, questionDto);
     }
 
     @Delete(':id')

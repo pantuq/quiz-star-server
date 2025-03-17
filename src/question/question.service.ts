@@ -50,11 +50,8 @@ export class QuestionService {
         return res;
     }
 
-    async update(id: string, updateData, author) {
-        return await this.questionModel.updateOne(
-            { _id: id, author },
-            updateData,
-        );
+    async update(id: string, updateData) {
+        return await this.questionModel.updateOne({ _id: id }, updateData);
     }
 
     async findOne(id: string) {
