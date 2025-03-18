@@ -10,6 +10,7 @@ import { Answer, AnswerSchema } from './schema/answer.schema';
             { name: Answer.name, schema: AnswerSchema },
         ]),
     ],
+    exports: [AnswerService],
     providers: [AnswerService],
     controllers: [AnswerController],
 })
