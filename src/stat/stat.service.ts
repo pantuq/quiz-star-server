@@ -122,10 +122,14 @@ export class StatService {
 
         // 获取组件
         const { componentList = [] } = q;
-        const comp = componentList.filter((c) => c.feId === componentFeId)[0];
+        const comp = componentList.filter((c) => c.fe_id === componentFeId)[0];
         if (comp == null) return [];
 
+        console.log('comp', comp);
+
         const { type, props } = comp;
+        console.log('props', props);
+
         if (type !== 'questionRadio' && type !== 'questionCheckbox') {
             // 单组件的，只能统计单选和多选,其他不统计
             return [];
@@ -133,6 +137,7 @@ export class StatService {
 
         // 获取答卷列表
         const total = await this.answerService.count(questionId);
+        // console.log('total', total);
         if (total === 0) return []; //答卷总数量
         const answers = await this.answerService.findAll(questionId, {
             page: 1,
@@ -141,11 +146,18 @@ export class StatService {
 
         // 累加各个value数量
         const countInfo = {};
-        answers.forEach((a) => {
-            if (a.componentFeId !== componentFeId) return;
-            a.value.forEach((v) => {
-                if (countInfo[v] == null) countInfo[v] = 0;
-                countInfo[v]++;
+        answers.forEach((answer) => {
+            answer.answerList.forEach((answerItem) => {
+                // console.log('answerItem', answerItem);
+                if (answerItem.componentFeId == componentFeId) {
+                    console.log('answerItem.value', answerItem.value);
+                    const value = answerItem.value;
+                    if (countInfo[value]) {
+                        countInfo[value] += 1;
+                    } else {
+                        countInfo[value] = 1;
+                    }
+                }
             });
         });
 
