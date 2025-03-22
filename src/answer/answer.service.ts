@@ -22,11 +22,13 @@ export class AnswerService {
         return await answer.save();
     }
 
+    // 获取当前问卷所有答卷的数量
     async count(questionId: string) {
         if (!questionId) return 0;
-        return await this.answerModel.count({ questionId });
+        return await this.answerModel.countDocuments({ questionId });
     }
 
+    // 获取到questio对应的答卷列表
     async findAll(questionId: string, opt: { page: number; pageSize: number }) {
         if (!questionId) return [];
 
