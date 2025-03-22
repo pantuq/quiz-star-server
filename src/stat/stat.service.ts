@@ -56,8 +56,9 @@ export class StatService {
 
             // 获取组件信息
             const comp = componentList.filter(
-                (c) => c.feId === componentFeId,
+                (c) => c.fe_id === componentFeId,
             )[0];
+
             const { type, props = [] } = comp;
             if (type === 'questionRadio') {
                 // 单选
@@ -85,6 +86,7 @@ export class StatService {
         const noData = { list: [], count: 0 };
         if (!questionId) return noData;
 
+        // q：问卷
         const q = await this.questionService.findOne(questionId);
         if (q == null) return noData;
 
