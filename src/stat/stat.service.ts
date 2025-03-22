@@ -31,14 +31,18 @@ export class StatService {
         const { list = [] } = props;
         const length = list.length;
 
+        // value是问卷的答案， props是问卷的配置
+        const val = value.split(',');
+        const res: string[] = [];
+
         for (let i = 0; i < length; i++) {
-            const item = list[i];
-            if (item.value === value) {
-                return item.text;
-                break;
+            for (let j = 0; j < val.length; j++) {
+                if (list[i].value === val[j]) {
+                    res.push(val[j]);
+                }
             }
         }
-        return '';
+        return res.toString();
     }
 
     /**
